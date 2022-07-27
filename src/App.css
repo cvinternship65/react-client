@@ -1,0 +1,315 @@
+.App{
+  overflow: visible;
+  /* background-color: #fcde67; */
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+.font-link{
+  font-family: 'Sarabun', sans-serif;
+}
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+button {
+  font-size: calc(10px + 2vmin);
+}
+
+.navbar-app{
+  text-align: center;
+  height:7vh;
+  /* background-color: #fcde67; */
+  position: top;
+  top: 0;
+  
+}
+
+.nav-items{
+  width:9.5rem;
+  padding:0;
+  border-radius: 10px;
+  transition: background-color 0.3s ease-out
+  
+}
+
+.nav-items:hover{
+  background-color: #CBF4FF;
+}
+
+.nav-brand{
+  font-weight: bold;
+}
+
+.searchApp-container{
+  overflow: visible;
+}
+
+.footer-container{
+  padding : 1rem;
+  background-color: white;
+  /* color : white; */
+  z-index: 41;
+  flex: 0 0 50px;
+  /* margin-top: auto; */
+  position: fixed;
+  bottom:0;
+  height:7vh;
+  width: 100%;
+  text-align: center;
+}
+
+.home-body{
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  height:86vh;
+
+}
+
+.searchApp-body{
+  height:86vh;
+  margin-bottom : 7vh;
+
+}
+
+.home-body-header{
+  padding:1rem;
+  margin-bottom: 2rem;
+}
+
+.home-col {
+  cursor: pointer;
+  transition : 0.3s;
+  margin-bottom:7vh;
+}
+.home-col:hover{
+  transform : scale(1.5);
+}
+
+.applicant-col{
+  width:30%;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+}
+
+.pdf-result{
+  width: 100%;
+  height: 20vh;
+}
+
+.row-extract-img{
+  height:50%;
+  /* background : #E28413 */
+}
+
+.row-extract-pdf{
+  /* margin-top: 3rem; */
+  height:70%;
+  /* background : #E28413 */
+}
+
+.pdf-viewer{
+  width: 100%;
+  height : 86vh;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.newApp-body{
+  text-align: left;
+}
+
+.newApp-form{
+  display: block;
+}
+
+.filter-form{
+  text-align: center;
+}
+
+.filter-row{
+  overflow: visible;
+}
+
+.filter-panel{
+  overflow: visible;
+}
+
+.filter-btn{
+  width: 60%;
+  height : 2.5rem;
+  border:none;
+  border-radius: 8px;
+  background-color: #71c2ff;
+  border-style: solid;
+  border-color: #8ECEFF;
+  transition: background-color 0.3s ease-out
+}
+
+.filter-btn:hover{
+  background-color: #CBF4FF;
+}
+
+.filter-header-btn{
+  margin-left:1rem;
+  height: 2.5rem;
+  width: 20%;
+  border:none;
+  border-radius: 8px;
+  background-color: #71c2ff;
+  border-style: solid;
+  border-color: #8ECEFF;
+  transition: background-color 0.3s ease-out
+
+}
+
+.filter-header-btn:hover{
+  background-color: #CBF4FF;
+}
+
+
+.cv-btn{
+  height: 5rem;
+  width: 60%;
+  border:none;
+  border-radius: 8px;
+  background-color: #71c2ff;
+  border-style: solid;
+  border-color: #8ECEFF;
+  transition: background-color 0.3s ease-out
+}
+
+.cv-btn:hover{
+  background-color: #CBF4FF;
+}
+
+
+.filter-row{
+  border-radius: 10px;
+  overflow: visible;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  margin-top: 1rem;
+
+}
+
+.search-cv{
+  border-radius: 10px;
+  overflow: visible;
+  margin-bottom: 3rem;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.form-control:disabled{
+  cursor: not-allowed;
+}
+
+.form-control-btn{
+  width: 80%;
+  height : 2.5rem;
+  border:none;
+  border-radius: 8px;
+  background-color: #71c2ff;
+  border-style: solid;
+  border-color: #8ECEFF;
+  transition: background-color 0.3s ease-out;
+  
+
+}
+
+.form-control-btn:disabled{
+  cursor: not-allowed;
+}
+
+.form-control-btn:hover{
+  background-color: #CBF4FF;
+}
+
+
+.form-control-btn-main{
+  width: 80%;
+  height : 2.5rem;
+  border:none;
+  border-radius: 8px;
+  background-color: #71c2ff;
+  border-style: solid;
+  border-color: #8ECEFF;
+  transition: background-color 0.3s ease-out
+}
+
+.form-control-btn-main:hover{
+  background-color: #CBF4FF;
+}
+
+.form-control-btn-upload{
+  /* text-align: center;
+  justify-content: center; */
+  width: 100%;
+  height : 3.5rem;
+  border:none;
+  border-radius: 8px;
+  background-color: #71c2ff;
+  border-style: solid;
+  border-color: #8ECEFF;
+  transition: background-color 0.3s ease-out;
+  
+
+}
+
+.form-control-btn-upload:disabled{
+  cursor: not-allowed;
+}
+
+.form-control-btn-upload:hover{
+  background-color: #CBF4FF;
+}
+
+.AppList{
+  float : left;
+}
+
+#wrapper ul li
+{
+    margin:0;
+    padding:0;
+}
+
+.delete-btn:hover{
+  cursor: pointer;
+}
+
+
