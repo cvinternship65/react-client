@@ -10,7 +10,7 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div className="App font-link">
+    <div className="App report-font">
       <BrowserRouter>
       <NavBar/>
       <Footer/>

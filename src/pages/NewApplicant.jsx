@@ -58,7 +58,7 @@ export const NewApplicant = () => {
   }
 
   const generatePDF = async () => {
-    const input = document.getElementById("report");
+    const input = document.querySelector("#report");
     html2canvas(input, {
       quality: 2,
       scale: 2,
@@ -67,10 +67,13 @@ export const NewApplicant = () => {
       useCORS: true,
     }).then((canvas) => {
       var scaleBy = 5;
-      const imgWidth = 660;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      const imgWidth = document.querySelector("#report").clientWidth;
+      // const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      const imgHeight = document.querySelector("#report").clientHeight;
+      // console.log(imgWidth);
+      // console.log(imgHeight);
       const imgData = canvas.toDataURL("img/png");
-      const pdf = new JsPDF("p", "px", [660, 700]);
+      const pdf = new JsPDF("p", "px", [imgWidth, imgHeight]);
       pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
       pdf.save(currName.split(" ")[0] + "-" + position + "-report.pdf");
     });
@@ -275,6 +278,9 @@ export const NewApplicant = () => {
     // if(currName.slice(-1) === ' '){
     //   setCurrName(currName);
     // }
+    if(currName === ""){
+      setCurrName(currName);
+    }
     if (!hasNumber(currName)) {
       if (re.test(currName)) {
         if (hasWhiteSpace(currName)) {
@@ -340,7 +346,9 @@ export const NewApplicant = () => {
       "^([ ]|[ๅภถุึคตจขชๆไำพะัีรนยบลฃฟหกดเ้่าสวงผปแอิืทมใฝ๑๒๓๔ู฿๕๖๗๘๙๐ฎฑธํ๊ณฯญฐฅฤฆฏโฌ็๋ษศซฉฮฺ์ฒฬฦ])+$",
       "g"
     );
-
+    if(currName === ""){
+      setCurrThaiName(currName);
+    }
     if (!hasNumber(currName)) {
       if (!re.test(currName)) {
         warnEngNotify();
@@ -442,17 +450,30 @@ export const NewApplicant = () => {
   const [currPL, setCurrPL] = useState("");
   const [currDB, setCurrDB] = useState("");
   const [currIDE, setCurrIDE] = useState("");
+
+  var minos = [];
+  var minpl = [];
+  var mindb = [];
+  var mintools = []; //
+  const [currMinOS, setCurrMinOS] = useState("");
+  const [currMinPL, setCurrMinPL] = useState("");
+  const [currMinDB, setCurrMinDB] = useState("");
+  const [currMinIDE, setCurrMinIDE] = useState("");
+
   const handleMajorChange = (e) => {
     var re = new RegExp(
-      "^([A-Z]|[a-z]|[0-9]|[/]|[@]|[.]|[,]|[\\]|[ ]|[\n]&[ๅภถุึคตจขชๆไำพะัีรนยบลฃฟหกดเ้่าสวงผปแอิืทมใฝ๑๒๓๔ู฿๕๖๗๘๙๐ฎฑธํ๊ณฯญฐฅฤฆฏโฌ็๋ษศซฉฮฺ์ฒฬฦ])+$",
+      "^([A-Z]|[a-z]|[0-9]|[/]|[@]|[.]|[,]|[\\]|[+]|[#]|[ ]|[\n]&[ๅภถุึคตจขชๆไำพะัีรนยบลฃฟหกดเ้่าสวงผปแอิืทมใฝ๑๒๓๔ู฿๕๖๗๘๙๐ฎฑธํ๊ณฯญฐฅฤฆฏโฌ็๋ษศซฉฮฺ์ฒฬฦ])+$",
       "g"
     );
-    let skill = e.split(",");
+    if(e === ""){
+      setMajorSkill(e);
+    }
+    let skill = e.split(", ");
     let latest = skill[skill.length - 1];
     if (re.test(e)) {
       if (e === "") {
         setMajorSkill(e);
-      } else if (e[e.length - 1] === ",") {
+      } else if (e[e.length - 1] === "," || e[e.length - 1] === " ") {
         setMajorSkill(e);
       } else {
         if (latest.length <= 1) {
@@ -500,24 +521,23 @@ export const NewApplicant = () => {
     setCurrPL(pl.join(", "));
     setCurrDB(db.join(", "));
     setCurrIDE(tools.join(", "));
-    // console.log(cat);
     setMajorCategory(cat.join(", "));
-    // setDivHeight(ref.current.clientHeight);
-    // console.log("height: ", ref.current.clientHeight);
-    // console.log("width: ", ref.current.clientWidth);
   };
 
   const handleMinorChange = (e) => {
     var re = new RegExp(
-      "^([A-Z]|[a-z]|[0-9]|[/]|[@]|[.]|[,]|[\\]|[ ]|[\n]&[ๅภถุึคตจขชๆไำพะัีรนยบลฃฟหกดเ้่าสวงผปแอิืทมใฝ๑๒๓๔ู฿๕๖๗๘๙๐ฎฑธํ๊ณฯญฐฅฤฆฏโฌ็๋ษศซฉฮฺ์ฒฬฦ])+$",
+      "^([A-Z]|[a-z]|[0-9]|[/]|[@]|[.]|[,]|[\\]|[+]|[#]|[ ]|[\n]&[ๅภถุึคตจขชๆไำพะัีรนยบลฃฟหกดเ้่าสวงผปแอิืทมใฝ๑๒๓๔ู฿๕๖๗๘๙๐ฎฑธํ๊ณฯญฐฅฤฆฏโฌ็๋ษศซฉฮฺ์ฒฬฦ])+$",
       "g"
     );
-    let skill = e.split(",");
+    if(e === ""){
+      setMinorSkill(e);
+    }
+    let skill = e.split(", ");
     let latest = skill[skill.length - 1];
     if (re.test(e)) {
       if (e === "") {
         setMinorSkill(e);
-      } else if (e[e.length - 1] === ",") {
+      } else if (e[e.length - 1] === "," || e[e.length - 1] === " ") {
         setMinorSkill(e);
       } else {
         if (latest.length <= 1) {
@@ -546,6 +566,25 @@ export const NewApplicant = () => {
         }
       }
     }
+    minos.length = 0;
+    minpl.length = 0;
+    mindb.length = 0;
+    mintools.length = 0;
+    for (let i = 0; i < skill.length; i++) {
+      if (cat[i] === "Operating System") {
+        minos.push(skill[i]);
+      } else if (cat[i] === "Programming Language") {
+        minpl.push(skill[i]);
+      } else if (cat[i] === "Database") {
+        mindb.push(skill[i]);
+      } else if (cat[i] === "Tools and IDE") {
+        mintools.push(skill[i]);
+      }
+    }
+    setCurrMinOS(minos.join(", "));
+    setCurrMinPL(minpl.join(", "));
+    setCurrMinDB(mindb.join(", "));
+    setCurrMinIDE(mintools.join(", "));
     console.log(cat);
     setMinorCategory(cat.join(", "));
   };
@@ -553,11 +592,13 @@ export const NewApplicant = () => {
   const [splitSoft, setSplitSoft] = useState([]);
   const handleSoftChange = (e) => {
     var re = new RegExp(
-      "^([A-Z]|[a-z]|[0-9]|[/]|[,]|[@]|[.]|[\\]|[ ]|[\n]&[ๅภถุึคตจขชๆไำพะัีรนยบลฃฟหกดเ้่าสวงผปแอิืทมใฝ๑๒๓๔ู฿๕๖๗๘๙๐ฎฑธํ๊ณฯญฐฅฤฆฏโฌ็๋ษศซฉฮฺ์ฒฬฦ])+$",
+      "^([A-Z]|[a-z]|[0-9]|[/]|[,]|[@]|[.]|[-]|[\\]|[ ]|[\n]&[ๅภถุึคตจขชๆไำพะัีรนยบลฃฟหกดเ้่าสวงผปแอิืทมใฝ๑๒๓๔ู฿๕๖๗๘๙๐ฎฑธํ๊ณฯญฐฅฤฆฏโฌ็๋ษศซฉฮฺ์ฒฬฦ])+$",
       "g"
     );
-
-    let skill = e.split(",");
+    if(e === ""){
+      setSoftSkill(e);
+    }
+    let skill = e.split(", ");
     let latest = skill[skill.length - 1];
 
     if (re.test(e)) {
@@ -897,6 +938,7 @@ export const NewApplicant = () => {
                           </Form.Label>
                           <DatePicker
                             selected={birthDate}
+                            dateFormat="dd/MM/yyyy"
                             onChange={(date) => handleDOB(date)}
                             id="birthDate"
                             name="birthDate"
@@ -1429,6 +1471,7 @@ export const NewApplicant = () => {
                           </Form.Label>
                           <DatePicker
                             selected={prescreenDate}
+                            dateFormat="dd/MM/yyyy"
                             onChange={(date) => setPrescreenDate(date)}
                             id="prescreenDate"
                             name="prescreenDate"
@@ -1442,6 +1485,7 @@ export const NewApplicant = () => {
                           </Form.Label>
                           <DatePicker
                             selected={startDate}
+                            dateFormat="dd/MM/yyyy"
                             onChange={(date) => setStartDate(date)}
                             id="startDate"
                             name="startDate"
@@ -1468,7 +1512,9 @@ export const NewApplicant = () => {
                             Interview From
                           </Form.Label>
                           <DatePicker
+                          
                             selected={interviewDateFrom}
+                            dateFormat="dd/MM/yyyy"
                             onChange={(date) => setInterviewDateFrom(date)}
                             id="interviewDateFrom"
                             name="interviewDateFrom"
@@ -1484,6 +1530,7 @@ export const NewApplicant = () => {
                           <DatePicker
                             selected={interviewDateTo}
                             onChange={(date) => setInterviewDateTo(date)}
+                            dateFormat="dd/MM/yyyy"
                             id="interviewDateTo"
                             name="interviewDateTo"
                             minDate={interviewDateFrom}
@@ -1540,7 +1587,7 @@ export const NewApplicant = () => {
                             encType="multipart/form-data"
                             accept="application/pdf"
                             // onChange={(e) => genfileChangedHandler(e)}
-                            required
+                           
                           ></input>
                         </Col>
                       </Row>
@@ -1579,7 +1626,7 @@ export const NewApplicant = () => {
             </Row>
             <Row>
               <Container
-                className="shadow mt-2 font-link"
+                className="shadow mt-2"
                 ref={ref}
                 id="report"
                 style={{ borderRadius: "8px" }}
@@ -1590,21 +1637,21 @@ export const NewApplicant = () => {
                 >
                   <Col>
                     <Container style={{ padding: "0" }}>
-                      <Image className="home-col-icon" src={img} height={40} />
+                      <Image className="home-col-icon" src={img} height={70} />
                     </Container>
                   </Col>
-                  <Col style={{ textAlign: "right", fontStyle: "italic" }}>
+                  <Col style={{ textAlign: "right", fontStyle: "italic", fontSize : "18pt" }}>
                     <p>{position}</p>
                   </Col>
                 </Row>
                 <Row style={{ textAlign: "left" }}>
                   <Col>
                     <Row>
-                      <h4>
+                      <h4 style={{fontSize : "16pt" }}>
                         <b>Personal Details</b>
                       </h4>
                     </Row>
-                    <Row>
+                    <Row style={{fontSize : "12pt" }}>
                       <Col sm={3}>
                         <p>
                           <b>Name</b>
@@ -1639,10 +1686,10 @@ export const NewApplicant = () => {
                   </Col>
                 </Row>
                 <Row style={{ textAlign: "left" }}>
-                  <h4>
+                  <h4 style={{fontSize : "16pt" }}>
                     <b>Qualification Summary</b>
                   </h4>
-                  <ul>
+                  <ul style={{fontSize : "12pt" }}>
                     <li
                       style={{ marginLeft: "1.5rem", wordBreak: "break-all" }}
                     >
@@ -1682,12 +1729,12 @@ export const NewApplicant = () => {
                   </ul>
                 </Row>
                 <Row style={{ textAlign: "left" }}>
-                  <h4>
+                  <h4 style={{fontSize : "16pt" }}>
                     <b>Technical Expertise</b>
                   </h4>
                 </Row>
-                <Row>
-                  {currOS != "" && (
+                <Row style={{fontSize : "12pt" }}>
+                  {currOS != "" || currMinOS != "" && (
                     <Row>
                       <Col>
                         <ul>
@@ -1698,12 +1745,20 @@ export const NewApplicant = () => {
                       </Col>
                       <Col style={{ wordBreak: "break-all" }}>
                         <div>
-                          <p> : {currOS}</p>
+                        { (currOS != "" && currMinOS == "")&& (
+                            <p> : {currOS}</p>
+                          )}
+                          { (currOS == "" && currMinOS != "")&& (
+                            <p> : {currMinOS}</p>
+                          )}
+                          {(currOS != "" && currMinOS != "")&&(
+                            <p> : {currOS} and {currMinOS}</p>
+                          )}
                         </div>
                       </Col>
                     </Row>
                   )}
-                  {currPL != "" && (
+                  {(currPL != "" || currMinPL != "" )&& (
                     <Row>
                       <Col>
                         <ul>
@@ -1714,12 +1769,21 @@ export const NewApplicant = () => {
                       </Col>
                       <Col style={{ wordBreak: "break-all" }}>
                         <div>
-                          <p> : {currPL}</p>
+                          {/* <p> : {currPL} and {currMinPL}</p> */}
+                          { (currPL != "" && currMinPL == "")&& (
+                            <p> : {currPL}</p>
+                          )}
+                          { (currPL == "" && currMinPL != "")&& (
+                            <p> : {currMinPL}</p>
+                          )}
+                          {(currPL != "" && currMinPL != "")&&(
+                            <p> : {currPL} and {currMinPL}</p>
+                          )}
                         </div>
                       </Col>
                     </Row>
                   )}
-                  {currDB != "" && (
+                  {currDB != "" || currMinDB != "" && (
                     <Row>
                       <Col>
                         <ul>
@@ -1728,12 +1792,21 @@ export const NewApplicant = () => {
                       </Col>
                       <Col style={{ wordBreak: "break-all" }}>
                         <div>
-                          <p> : {currDB}</p>
+                          {/* <p> : {currDB} and {currMinDB}</p> */}
+                          { (currDB != "" && currMinDB == "")&& (
+                            <p> : {currDB}</p>
+                          )}
+                          { (currDB == "" && currMinDB != "")&& (
+                            <p> : {currMinDB}</p>
+                          )}
+                          {(currDB != "" && currMinDB != "")&&(
+                            <p> : {currDB} and {currMinDB}</p>
+                          )}
                         </div>
                       </Col>
                     </Row>
                   )}
-                  {currIDE != "" && (
+                  {currIDE != "" || currMinIDE != "" && (
                     <Row>
                       <Col>
                         <ul>
@@ -1744,20 +1817,29 @@ export const NewApplicant = () => {
                       </Col>
                       <Col style={{ wordBreak: "break-all" }}>
                         <div>
-                          <p> : {currIDE}</p>
+                          {/* <p> : {currIDE} and {currMinIDE}</p> */}
+                          { (currIDE != "" && currMinIDE == "")&& (
+                            <p> : {currIDE}</p>
+                          )}
+                          { (currIDE == "" && currMinIDE != "")&& (
+                            <p> : {currMinIDE}</p>
+                          )}
+                          {(currIDE != "" && currMinIDE != "")&&(
+                            <p> : {currIDE} and {currMinIDE}</p>
+                          )}
                         </div>
                       </Col>
                     </Row>
                   )}
                 </Row>
                 <Row style={{ textAlign: "left" }}>
-                  <h4>
+                  <h4 style={{fontSize : "16pt" }}>
                     <b>Professional Experiences</b>
                   </h4>
                 </Row>
                 {workList &&
                   workList.map((work, index) => (
-                    <Row>
+                    <Row style={{fontSize : "12pt" }}>
                       <Row>
                         <Col sm={8}>
                           <b>
@@ -1792,11 +1874,11 @@ export const NewApplicant = () => {
                     </Row>
                   ))}
                 <Row style={{ textAlign: "left" }}>
-                  <h4>
+                  <h4 style={{fontSize : "16pt" }}>
                     <b>Education</b>
                   </h4>
                 </Row>
-                <Row className="mb-3">
+                <Row className="mb-3" style={{fontSize : "12pt" }}>
                   {(degree != "" || gradYear != "") && (
                     <Row>
                       <Col>{degree}</Col>

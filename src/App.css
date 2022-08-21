@@ -16,6 +16,11 @@
 .font-link{
   font-family: 'Sarabun', sans-serif;
 }
+
+.report-font{
+  font-family: 'Calibri', sans-serif;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

@@ -208,6 +208,10 @@ export const SearchApplicant = () => {
         await console.log("sortFilter: " + sortFilter);
         let temp = [];
         if (sortFilter === "name") {
+          let lowercaseData = currData
+          for(let i = 0; i < currData.length; i++) {
+            lowercaseData.name = lowercaseData.name.toLowerCase();
+          }
           temp = currData.sort(dynamicSort("name"));
         } else if (sortFilter === "experience") {
           temp = currData.sort(dynamicSort("majorExp"));
