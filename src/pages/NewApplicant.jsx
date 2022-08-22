@@ -75,7 +75,8 @@ export const NewApplicant = () => {
       const imgData = canvas.toDataURL("img/png");
       const pdf = new JsPDF("p", "px", [imgWidth, imgHeight]);
       pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-      pdf.save(currName.split(" ")[0] + "-" + position + "-report.pdf");
+      pdf.save(position + "-" + currName.split(" ")[0] +  " " +currName.split(" ")[1] + "-" +currDate.toString().substring(8,10)+currDate.toString().substring(4,7) +  currDate.toString().substring(11,15)+  "-report.pdf");
+      console.log(); 
     });
   };
   const warnNumberNotify = () => {
@@ -207,7 +208,7 @@ export const NewApplicant = () => {
   const maritalSelectChange = (maritalValue) => {
     setMaritalValue(maritalValue);
   };
-
+  const [currDate, setCurrDate] = useState(new Date());
   const [currName, setCurrName] = useState("");
   const [currThaiName, setCurrThaiName] = useState("");
   const [position, setPosition] = useState("");
@@ -278,7 +279,7 @@ export const NewApplicant = () => {
     // if(currName.slice(-1) === ' '){
     //   setCurrName(currName);
     // }
-    if(currName === ""){
+    if (currName === "") {
       setCurrName(currName);
     }
     if (!hasNumber(currName)) {
@@ -346,7 +347,7 @@ export const NewApplicant = () => {
       "^([ ]|[ๅภถุึคตจขชๆไำพะัีรนยบลฃฟหกดเ้่าสวงผปแอิืทมใฝ๑๒๓๔ู฿๕๖๗๘๙๐ฎฑธํ๊ณฯญฐฅฤฆฏโฌ็๋ษศซฉฮฺ์ฒฬฦ])+$",
       "g"
     );
-    if(currName === ""){
+    if (currName === "") {
       setCurrThaiName(currName);
     }
     if (!hasNumber(currName)) {
@@ -465,7 +466,7 @@ export const NewApplicant = () => {
       "^([A-Z]|[a-z]|[0-9]|[/]|[@]|[.]|[,]|[\\]|[+]|[#]|[ ]|[\n]&[ๅภถุึคตจขชๆไำพะัีรนยบลฃฟหกดเ้่าสวงผปแอิืทมใฝ๑๒๓๔ู฿๕๖๗๘๙๐ฎฑธํ๊ณฯญฐฅฤฆฏโฌ็๋ษศซฉฮฺ์ฒฬฦ])+$",
       "g"
     );
-    if(e === ""){
+    if (e === "") {
       setMajorSkill(e);
     }
     let skill = e.split(", ");
@@ -529,7 +530,7 @@ export const NewApplicant = () => {
       "^([A-Z]|[a-z]|[0-9]|[/]|[@]|[.]|[,]|[\\]|[+]|[#]|[ ]|[\n]&[ๅภถุึคตจขชๆไำพะัีรนยบลฃฟหกดเ้่าสวงผปแอิืทมใฝ๑๒๓๔ู฿๕๖๗๘๙๐ฎฑธํ๊ณฯญฐฅฤฆฏโฌ็๋ษศซฉฮฺ์ฒฬฦ])+$",
       "g"
     );
-    if(e === ""){
+    if (e === "") {
       setMinorSkill(e);
     }
     let skill = e.split(", ");
@@ -595,7 +596,7 @@ export const NewApplicant = () => {
       "^([A-Z]|[a-z]|[0-9]|[/]|[,]|[@]|[.]|[-]|[\\]|[ ]|[\n]&[ๅภถุึคตจขชๆไำพะัีรนยบลฃฟหกดเ้่าสวงผปแอิืทมใฝ๑๒๓๔ู฿๕๖๗๘๙๐ฎฑธํ๊ณฯญฐฅฤฆฏโฌ็๋ษศซฉฮฺ์ฒฬฦ])+$",
       "g"
     );
-    if(e === ""){
+    if (e === "") {
       setSoftSkill(e);
     }
     let skill = e.split(", ");
@@ -821,8 +822,10 @@ export const NewApplicant = () => {
     ]);
   };
 
-  const [interviewNotes, setInterviewNotes] = useState("");
+  const [logoWidth, setLogoWidth] = useState(100);
+  const [logoHeight, setLogoHeight] = useState(100);
 
+  const [interviewNotes, setInterviewNotes] = useState("");
 
   return (
     <motion.div
@@ -1512,7 +1515,6 @@ export const NewApplicant = () => {
                             Interview From
                           </Form.Label>
                           <DatePicker
-                          
                             selected={interviewDateFrom}
                             dateFormat="dd/MM/yyyy"
                             onChange={(date) => setInterviewDateFrom(date)}
@@ -1524,9 +1526,7 @@ export const NewApplicant = () => {
                           />
                         </Col>
                         <Col>
-                          <Form.Label htmlFor="interviewDateTo">
-                            To
-                          </Form.Label>
+                          <Form.Label htmlFor="interviewDateTo">To</Form.Label>
                           <DatePicker
                             selected={interviewDateTo}
                             onChange={(date) => setInterviewDateTo(date)}
@@ -1540,18 +1540,26 @@ export const NewApplicant = () => {
                         </Col>
                       </Row>
                       <Row className="mt-3">
-                        
-                          <Row>
+                        <Row>
                           <Col>
-                          <Form.Label htmlFor="interviewNotes">
-                            Interview Notes
-                          </Form.Label></Col>
+                            <Form.Label htmlFor="interviewNotes">
+                              Interview Notes
+                            </Form.Label>
+                          </Col>
+                        </Row>
+                        <Col>
+                          <Row>
+                            <textarea
+                              style={{ height: "14vh" }}
+                              id="interviewNotes"
+                              name="interviewNotes"
+                              onChange={(e) =>
+                                setInterviewNotes(e.target.value)
+                              }
+                              value={interviewNotes}
+                            ></textarea>
                           </Row>
-                          <Col>
-                          <Row>
-                          <textarea style={{ height: '14vh' }} id="interviewNotes" name="interviewNotes" onChange={(e) => setInterviewNotes(e.target.value)} value={interviewNotes}></textarea>
-                          </Row></Col>
-
+                        </Col>
                       </Row>
                     </Accordion.Body>
                   </Accordion.Item>
@@ -1587,7 +1595,6 @@ export const NewApplicant = () => {
                             encType="multipart/form-data"
                             accept="application/pdf"
                             // onChange={(e) => genfileChangedHandler(e)}
-                           
                           ></input>
                         </Col>
                       </Row>
@@ -1637,21 +1644,32 @@ export const NewApplicant = () => {
                 >
                   <Col>
                     <Container style={{ padding: "0" }}>
-                      <Image className="home-col-icon" src={img} height={70} />
+                      <Image
+                        className="home-col-icon"
+                        src={img}
+                        height={logoHeight}
+                        width={logoWidth}
+                      />
                     </Container>
                   </Col>
-                  <Col style={{ textAlign: "right", fontStyle: "italic", fontSize : "18pt" }}>
+                  <Col
+                    style={{
+                      textAlign: "right",
+                      fontStyle: "italic",
+                      fontSize: "18pt",
+                    }}
+                  >
                     <p>{position}</p>
                   </Col>
                 </Row>
                 <Row style={{ textAlign: "left" }}>
                   <Col>
                     <Row>
-                      <h4 style={{fontSize : "16pt" }}>
+                      <h4 style={{ fontSize: "16pt" }}>
                         <b>Personal Details</b>
                       </h4>
                     </Row>
-                    <Row style={{fontSize : "12pt" }}>
+                    <Row style={{ fontSize: "12pt" }}>
                       <Col sm={3}>
                         <p>
                           <b>Name</b>
@@ -1686,10 +1704,10 @@ export const NewApplicant = () => {
                   </Col>
                 </Row>
                 <Row style={{ textAlign: "left" }}>
-                  <h4 style={{fontSize : "16pt" }}>
+                  <h4 style={{ fontSize: "16pt" }}>
                     <b>Qualification Summary</b>
                   </h4>
-                  <ul style={{fontSize : "12pt" }}>
+                  <ul style={{ fontSize: "12pt" }}>
                     <li
                       style={{ marginLeft: "1.5rem", wordBreak: "break-all" }}
                     >
@@ -1729,36 +1747,40 @@ export const NewApplicant = () => {
                   </ul>
                 </Row>
                 <Row style={{ textAlign: "left" }}>
-                  <h4 style={{fontSize : "16pt" }}>
+                  <h4 style={{ fontSize: "16pt" }}>
                     <b>Technical Expertise</b>
                   </h4>
                 </Row>
-                <Row style={{fontSize : "12pt" }}>
-                  {currOS != "" || currMinOS != "" && (
-                    <Row>
-                      <Col>
-                        <ul>
-                          <li style={{ marginLeft: "1.5rem" }}>
-                            Operating System
-                          </li>
-                        </ul>
-                      </Col>
-                      <Col style={{ wordBreak: "break-all" }}>
-                        <div>
-                        { (currOS != "" && currMinOS == "")&& (
-                            <p> : {currOS}</p>
-                          )}
-                          { (currOS == "" && currMinOS != "")&& (
-                            <p> : {currMinOS}</p>
-                          )}
-                          {(currOS != "" && currMinOS != "")&&(
-                            <p> : {currOS} and {currMinOS}</p>
-                          )}
-                        </div>
-                      </Col>
-                    </Row>
-                  )}
-                  {(currPL != "" || currMinPL != "" )&& (
+                <Row style={{ fontSize: "12pt" }}>
+                  {currOS != "" ||
+                    (currMinOS != "" && (
+                      <Row>
+                        <Col>
+                          <ul>
+                            <li style={{ marginLeft: "1.5rem" }}>
+                              Operating System
+                            </li>
+                          </ul>
+                        </Col>
+                        <Col style={{ wordBreak: "break-all" }}>
+                          <div>
+                            {currOS != "" && currMinOS == "" && (
+                              <p> : {currOS}</p>
+                            )}
+                            {currOS == "" && currMinOS != "" && (
+                              <p> : {currMinOS}</p>
+                            )}
+                            {currOS != "" && currMinOS != "" && (
+                              <p>
+                                {" "}
+                                : {currOS} and {currMinOS}
+                              </p>
+                            )}
+                          </div>
+                        </Col>
+                      </Row>
+                    ))}
+                  {(currPL != "" || currMinPL != "") && (
                     <Row>
                       <Col>
                         <ul>
@@ -1770,80 +1792,91 @@ export const NewApplicant = () => {
                       <Col style={{ wordBreak: "break-all" }}>
                         <div>
                           {/* <p> : {currPL} and {currMinPL}</p> */}
-                          { (currPL != "" && currMinPL == "")&& (
+                          {currPL != "" && currMinPL == "" && (
                             <p> : {currPL}</p>
                           )}
-                          { (currPL == "" && currMinPL != "")&& (
+                          {currPL == "" && currMinPL != "" && (
                             <p> : {currMinPL}</p>
                           )}
-                          {(currPL != "" && currMinPL != "")&&(
-                            <p> : {currPL} and {currMinPL}</p>
+                          {currPL != "" && currMinPL != "" && (
+                            <p>
+                              {" "}
+                              : {currPL} and {currMinPL}
+                            </p>
                           )}
                         </div>
                       </Col>
                     </Row>
                   )}
-                  {currDB != "" || currMinDB != "" && (
-                    <Row>
-                      <Col>
-                        <ul>
-                          <li style={{ marginLeft: "1.5rem" }}>Database</li>
-                        </ul>
-                      </Col>
-                      <Col style={{ wordBreak: "break-all" }}>
-                        <div>
-                          {/* <p> : {currDB} and {currMinDB}</p> */}
-                          { (currDB != "" && currMinDB == "")&& (
-                            <p> : {currDB}</p>
-                          )}
-                          { (currDB == "" && currMinDB != "")&& (
-                            <p> : {currMinDB}</p>
-                          )}
-                          {(currDB != "" && currMinDB != "")&&(
-                            <p> : {currDB} and {currMinDB}</p>
-                          )}
-                        </div>
-                      </Col>
-                    </Row>
-                  )}
-                  {currIDE != "" || currMinIDE != "" && (
-                    <Row>
-                      <Col>
-                        <ul>
-                          <li style={{ marginLeft: "1.5rem" }}>
-                            Tools and IDE
-                          </li>
-                        </ul>
-                      </Col>
-                      <Col style={{ wordBreak: "break-all" }}>
-                        <div>
-                          {/* <p> : {currIDE} and {currMinIDE}</p> */}
-                          { (currIDE != "" && currMinIDE == "")&& (
-                            <p> : {currIDE}</p>
-                          )}
-                          { (currIDE == "" && currMinIDE != "")&& (
-                            <p> : {currMinIDE}</p>
-                          )}
-                          {(currIDE != "" && currMinIDE != "")&&(
-                            <p> : {currIDE} and {currMinIDE}</p>
-                          )}
-                        </div>
-                      </Col>
-                    </Row>
-                  )}
+                  {currDB != "" ||
+                    (currMinDB != "" && (
+                      <Row>
+                        <Col>
+                          <ul>
+                            <li style={{ marginLeft: "1.5rem" }}>Database</li>
+                          </ul>
+                        </Col>
+                        <Col style={{ wordBreak: "break-all" }}>
+                          <div>
+                            {/* <p> : {currDB} and {currMinDB}</p> */}
+                            {currDB != "" && currMinDB == "" && (
+                              <p> : {currDB}</p>
+                            )}
+                            {currDB == "" && currMinDB != "" && (
+                              <p> : {currMinDB}</p>
+                            )}
+                            {currDB != "" && currMinDB != "" && (
+                              <p>
+                                {" "}
+                                : {currDB} and {currMinDB}
+                              </p>
+                            )}
+                          </div>
+                        </Col>
+                      </Row>
+                    ))}
+                  {currIDE != "" ||
+                    (currMinIDE != "" && (
+                      <Row>
+                        <Col>
+                          <ul>
+                            <li style={{ marginLeft: "1.5rem" }}>
+                              Tools and IDE
+                            </li>
+                          </ul>
+                        </Col>
+                        <Col style={{ wordBreak: "break-all" }}>
+                          <div>
+                            {/* <p> : {currIDE} and {currMinIDE}</p> */}
+                            {currIDE != "" && currMinIDE == "" && (
+                              <p> : {currIDE}</p>
+                            )}
+                            {currIDE == "" && currMinIDE != "" && (
+                              <p> : {currMinIDE}</p>
+                            )}
+                            {currIDE != "" && currMinIDE != "" && (
+                              <p>
+                                {" "}
+                                : {currIDE} and {currMinIDE}
+                              </p>
+                            )}
+                          </div>
+                        </Col>
+                      </Row>
+                    ))}
                 </Row>
                 <Row style={{ textAlign: "left" }}>
-                  <h4 style={{fontSize : "16pt" }}>
+                  <h4 style={{ fontSize: "16pt" }}>
                     <b>Professional Experiences</b>
                   </h4>
                 </Row>
                 {workList &&
                   workList.map((work, index) => (
-                    <Row style={{fontSize : "12pt" }}>
+                    <Row style={{ fontSize: "12pt" }}>
                       <Row>
                         <Col sm={8}>
                           <b>
-                              {work.company.slice(0,28)} | {work.workStart} -{" "}
+                            {work.company.slice(0, 28)} | {work.workStart} -{" "}
                             {work.workEnd}{" "}
                           </b>
                         </Col>
@@ -1874,11 +1907,11 @@ export const NewApplicant = () => {
                     </Row>
                   ))}
                 <Row style={{ textAlign: "left" }}>
-                  <h4 style={{fontSize : "16pt" }}>
+                  <h4 style={{ fontSize: "16pt" }}>
                     <b>Education</b>
                   </h4>
                 </Row>
-                <Row className="mb-3" style={{fontSize : "12pt" }}>
+                <Row className="mb-3" style={{ fontSize: "12pt" }}>
                   {(degree != "" || gradYear != "") && (
                     <Row>
                       <Col>{degree}</Col>
@@ -1904,6 +1937,50 @@ export const NewApplicant = () => {
                   className="form-control"
                   onChange={onImageChange}
                 ></input>
+              </Col>
+            </Row>
+            <Row className="mt-3 mb-3">
+              <Col>
+                <Row>
+                  <h5>
+                    <b>
+                      Logo Width
+                    </b>
+                  </h5>
+                </Row>
+                <Row>
+                <Col>
+                <input
+                  type="number"
+                  className="form-control"
+                  value={logoWidth}
+                  min={0}
+                  step={1}
+                  onChange={(e) => setLogoWidth(e.target.value)}
+                ></input>
+                </Col>
+                </Row>
+              </Col>
+              <Col>
+                <Row>
+                  <h5>
+                    <b>
+                      Logo Height
+                    </b>
+                  </h5>
+                </Row>
+                <Row>
+                  <Col>
+                  <input
+                  type="number"
+                  className="form-control"
+                  value={logoHeight}
+                  min={0}
+                  step={1}
+                  onChange={(e) => setLogoHeight(e.target.value)}
+                ></input>
+                  </Col>
+                </Row>
               </Col>
             </Row>
             <Row style={{ textAlign: "center" }}>
